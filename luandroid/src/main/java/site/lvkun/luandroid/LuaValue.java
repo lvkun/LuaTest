@@ -1,7 +1,13 @@
 package site.lvkun.luandroid;
 
 public interface LuaValue {
-    int TYPE_NUMBER = 3;
+    enum Type {
+        BOOLEAN,
+        INTEGER,
+        NUMBER,
+        STRING,
+        TABLE,
+    }
 
-    int getType();
+    Type getType();
 }

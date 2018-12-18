@@ -3,6 +3,8 @@
 #include <lauxlib.h>
 
 #include "Log.h"
+#include "value/LuaValue.h"
+#include "Constants.h"
 
 #define TAG "LUASTATE"
 #define LUAJAVAJNIENVTAG "__JNIEnv"
@@ -81,8 +83,8 @@ JNICALL
 Java_site_lvkun_luandroid_LuaState_nativeNewState(
         JNIEnv *env,
         jobject /* this */) {
-    jclass luaStateClass = env->FindClass("site/lvkun/luandroid/LuaState");
-    jmethodID constructor = env->GetMethodID(luaStateClass, "<init>", "()V");
+    jclass luaStateClass = env->FindClass(STATE_CLASS_NAME);
+    jmethodID constructor = env->GetMethodID(luaStateClass, CONSTRUCTOR_METHOD_NAME, "()V");
 
     jobject stateObject = env->NewObject(luaStateClass, constructor);
     jobject globalState = env->NewGlobalRef(stateObject);
@@ -138,14 +140,19 @@ Java_site_lvkun_luandroid_LuaState_nativeGetGlobal(JNIEnv *env, jobject instance
 
     LOGD(TAG, "getGlobal %s", name);
 
-    stackDump(state);
-
-    if (lua_isinteger(state, -1)) {
-        int i = lua_tointeger(state, -1);
-        LOGD(TAG, "result %d", i);
+    jobject variable;
+    int type = lua_type(state, -1);
+    switch (type) {
+        case LUA_TNUMBER:
+            if (lua_isinteger(state, -1)) {
+                int value = lua_tointeger(state, -1);
+                variable = newLuaNumber();
+            } else {
+                double value = lua_tonumber(state, -1);
+            }
+            break;
     }
-
     env->ReleaseStringUTFChars(name_, name);
 
-    return 0;
+    return variable;
 }

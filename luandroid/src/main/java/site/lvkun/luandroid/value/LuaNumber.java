@@ -11,8 +11,8 @@ public class LuaNumber implements LuaValue {
     }
 
     @Override
-    public int getType() {
-        return TYPE_NUMBER;
+    public Type getType() {
+        return Type.NUMBER;
     }
 
     public Double toDouble() {
