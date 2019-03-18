@@ -2,20 +2,20 @@ package site.lvkun.luandroid.value;
 
 import site.lvkun.luandroid.LuaValue;
 
-public class LuaNumber implements LuaValue {
+public class LuaInteger implements LuaValue {
 
-    private final Double mValue;
+    private final int mValue;
 
-    public LuaNumber(Double value) {
+    public LuaInteger(int value) {
         mValue = value;
     }
 
     @Override
     public Type getType() {
-        return Type.NUMBER;
+        return Type.INTEGER;
     }
 
-    public Double toDouble() {
+    public int getValue() {
         return mValue;
     }
 }

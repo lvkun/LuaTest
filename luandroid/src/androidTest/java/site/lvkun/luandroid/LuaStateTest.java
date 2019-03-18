@@ -8,9 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import site.lvkun.luandroid.value.LuaInteger;
+
 @RunWith(AndroidJUnit4.class)
 public class LuaStateTest {
-    LuaState mState;
+    private LuaState mState;
 
     @Before
     public void before() {
@@ -30,6 +32,14 @@ public class LuaStateTest {
     @Test
     public void getGlobalTest() throws Exception {
         mState.loadString("i = 0");
-        mState.getGlobal("i");
+
+        LuaValue value = mState.getGlobal("i");
+        Assert.assertEquals(LuaValue.Type.INTEGER, value.getType());
+        Assert.assertEquals(0, ((LuaInteger) value).getValue());
+
+        mState.loadString("i = 42");
+        value = mState.getGlobal("i");
+        Assert.assertEquals(LuaValue.Type.INTEGER, value.getType());
+        Assert.assertEquals(42, ((LuaInteger) value).getValue());
     }
 }

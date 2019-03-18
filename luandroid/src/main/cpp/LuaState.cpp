@@ -146,7 +146,7 @@ Java_site_lvkun_luandroid_LuaState_nativeGetGlobal(JNIEnv *env, jobject instance
         case LUA_TNUMBER:
             if (lua_isinteger(state, -1)) {
                 int value = lua_tointeger(state, -1);
-                variable = newLuaNumber();
+                variable = newLuaInteger(env, value);
             } else {
                 double value = lua_tonumber(state, -1);
             }

@@ -1,7 +1,3 @@
-//
-// Created by mipay on 2018/11/27.
-//
-
 #ifndef LUANDROID_LOG_H
 #define LUANDROID_LOG_H
 
