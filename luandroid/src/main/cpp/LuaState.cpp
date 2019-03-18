@@ -149,6 +149,7 @@ Java_site_lvkun_luandroid_LuaState_nativeGetGlobal(JNIEnv *env, jobject instance
                 variable = newLuaInteger(env, value);
             } else {
                 double value = lua_tonumber(state, -1);
+                variable = newLuaNumber(env, value);
             }
             break;
     }

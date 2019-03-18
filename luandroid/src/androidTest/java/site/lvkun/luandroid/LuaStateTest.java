@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import site.lvkun.luandroid.value.LuaInteger;
+import site.lvkun.luandroid.value.LuaNumber;
 
 @RunWith(AndroidJUnit4.class)
 public class LuaStateTest {
@@ -41,5 +42,10 @@ public class LuaStateTest {
         value = mState.getGlobal("i");
         Assert.assertEquals(LuaValue.Type.INTEGER, value.getType());
         Assert.assertEquals(42, ((LuaInteger) value).getValue());
+
+        mState.loadString("j = 0.0");
+        value = mState.getGlobal("j");
+        Assert.assertEquals(LuaValue.Type.NUMBER, value.getType());
+        Assert.assertEquals(0.0, ((LuaNumber) value).getValue(), 0.0);
     }
 }
